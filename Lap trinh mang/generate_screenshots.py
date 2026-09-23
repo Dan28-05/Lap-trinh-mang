@@ -9,7 +9,7 @@ FONT_BOLD = ImageFont.truetype("C:/Windows/Fonts/consolab.ttf", 15)
 FONT_TITLE = ImageFont.truetype("C:/Windows/Fonts/segoeui.ttf", 13)
 
 KEYWORDS = {"package", "import", "public", "class", "static", "void", "try", "catch", "new", "while", "for", "if", "else", "break", "return", "final", "int", "byte", "throws"}
-TYPES = {"String", "StringBuilder", "URL", "URLConnection", "HttpURLConnection", "InetAddress", "BufferedReader", "InputStreamReader", "PrintWriter", "ServerSocket", "Socket", "DatagramPacket", "DatagramSocket", "IOException", "UnknownHostException", "Exception"}
+TYPES = {"String", "StringBuilder", "URL", "URLConnection", "InetAddress", "BufferedReader", "InputStreamReader", "IOException", "UnknownHostException", "Exception"}
 
 def render_code_window(title, filename, code_lines, output_path):
     width = 960
@@ -21,27 +21,22 @@ def render_code_window(title, filename, code_lines, output_path):
     img = Image.new("RGB", (width, height), (30, 30, 30))
     draw = ImageDraw.Draw(img)
     
-    # Title bar
     draw.rectangle([(0, 0), (width, 35)], fill=(45, 45, 45))
     draw.text((15, 9), title, fill=(200, 200, 200), font=FONT_TITLE)
     
-    # Window controls
     draw.ellipse([(width - 65, 12), (width - 53, 24)], fill=(237, 106, 94))
     draw.ellipse([(width - 45, 12), (width - 33, 24)], fill=(245, 191, 79))
     draw.ellipse([(width - 25, 12), (width - 13, 24)], fill=(98, 197, 84))
     
-    # Tab bar
     draw.rectangle([(0, 35), (width, 65)], fill=(37, 37, 38))
     draw.rectangle([(10, 37), (220, 65)], fill=(30, 30, 30))
     draw.rectangle([(10, 35), (220, 37)], fill=(0, 122, 204))
     draw.text((25, 42), f"☕  {filename}", fill=(255, 255, 255), font=FONT_TITLE)
     
-    # Gutter
     gutter_w = 55
     draw.rectangle([(0, 65), (gutter_w, height)], fill=(30, 30, 30))
     draw.line([(gutter_w, 65), (gutter_w, height)], fill=(50, 50, 50), width=1)
     
-    # Code body
     y = pad_top
     for i, line in enumerate(code_lines, 1):
         draw.text((gutter_w - 15 - len(str(i))*8, y), str(i), fill=(120, 120, 120), font=FONT_CODE)
@@ -82,35 +77,23 @@ def render_terminal_window(title, prompt_cmd, output_text, output_path):
     img = Image.new("RGB", (width, height), (12, 12, 12))
     draw = ImageDraw.Draw(img)
     
-    # Title bar
     draw.rectangle([(0, 0), (width, 35)], fill=(31, 31, 31))
     draw.text((15, 9), title, fill=(210, 210, 210), font=FONT_TITLE)
     
-    # Window controls
     draw.ellipse([(width - 65, 12), (width - 53, 24)], fill=(237, 106, 94))
     draw.ellipse([(width - 45, 12), (width - 33, 24)], fill=(245, 191, 79))
     draw.ellipse([(width - 25, 12), (width - 13, 24)], fill=(98, 197, 84))
     
     y = pad_top
-    
-    # Command prompt
-    draw.text((18, y), "PS C:\\Users\\fleya\\OOSE 2026-2027> ", fill=(78, 201, 176), font=FONT_BOLD)
-    prompt_w = int(draw.textlength("PS C:\\Users\\fleya\\OOSE 2026-2027> ", font=FONT_BOLD))
+    draw.text((18, y), "PS C:\\Users\\fleya\\Lap trinh mang> ", fill=(78, 201, 176), font=FONT_BOLD)
+    prompt_w = int(draw.textlength("PS C:\\Users\\fleya\\Lap trinh mang> ", font=FONT_BOLD))
     draw.text((18 + prompt_w, y), prompt_cmd, fill=(255, 255, 255), font=FONT_BOLD)
     y += line_h * 1.5
     
-    # Output lines
     for line in out_lines:
         color = (220, 220, 220)
         if "===" in line or ">>>" in line:
             color = (245, 191, 79)
-        elif "Server echo:" in line or "UDP ACK:" in line:
-            color = (98, 197, 84)
-        elif "Client gui:" in line:
-            color = (86, 156, 214)
-        elif "Response Code: 200" in line:
-            color = (98, 197, 84)
-            
         draw.text((18, int(y)), line, fill=color, font=FONT_CODE)
         y += line_h
         
@@ -203,73 +186,4 @@ IP        : 95.111.193.52
 """
 render_terminal_window("Windows PowerShell - Run InetAddressExample", "java -cp bin com.gpcoder.net.InetAddressExample", inet_run_text, "screenshots/03_InetAddressExample_Run.png")
 
-# 4. TCP Socket Run
-tcp_run_text = """
-=== TCP SOCKET: SERVER & CLIENT GIAO TIEP 2 CHIEU ===
-[Server] TCP Server dang khoi dong tren cong 8088
-[Server] Server san sang, dang cho client ket noi...
-[Client] Dang ket noi toi TCP Server 127.0.0.1:8088
-[Server] Client da ket noi: /127.0.0.1:55940
-[Client] Ket noi thanh cong toi Server
-[Client] Server gui: Chao mung ban den voi TCP Server
-
-Client gui: Xin chao server tu TCP Client
-[Server] Server nhan: Xin chao server tu TCP Client
-Client nhan phan hoi: Server echo: XIN CHAO SERVER TU TCP CLIENT
-
-Client gui: Lap trinh mang java co ban
-[Server] Server nhan: Lap trinh mang java co ban
-Client nhan phan hoi: Server echo: LAP TRINH MANG JAVA CO BAN
-
-Client gui: Hoc phan OOSE 2026-2027
-[Server] Server nhan: Hoc phan OOSE 2026-2027
-Client nhan phan hoi: Server echo: HOC PHAN OOSE 2026-2027
-
-Client gui: bye
-[Server] Server nhan: bye
-Client nhan phan hoi: Tam biet client
-[Server] Client da ngat ket noi
-[Client] Ket thuc phien giao tiep client
-"""
-render_terminal_window("Windows PowerShell - TCP Socket Communication", "java -cp bin com.gpcoder.net.tcp.TCPServer & TCPClient", tcp_run_text, "screenshots/04_TCP_Socket_Run.png")
-
-# 5. UDP Socket Run
-udp_run_text = """
-=== UDP SOCKET: TRUYEN NHAN DATAGRAMPACKET ===
-[Server] UDP Server dang lang nghe tren cong 9876
-[Client] Khoi dong UDP Client gui toi localhost:9876
-
-Client gui: Goi tin UDP 1: Xin chao UDP Server
-[Server] Server nhan tu /127.0.0.1:50619 : Goi tin UDP 1: Xin chao UDP Server
-Client nhan phan hoi: UDP ACK: GOI TIN UDP 1: XIN CHAO UDP SERVER
-
-Client gui: Goi tin UDP 2: Du lieu gui phi ket noi
-[Server] Server nhan tu /127.0.0.1:50619 : Goi tin UDP 2: Du lieu gui phi ket noi
-Client nhan phan hoi: UDP ACK: GOI TIN UDP 2: DU LIEU GUI PHI KET NOI
-
-Client gui: exit
-[Server] Server nhan tu /127.0.0.1:50619 : exit
-Client nhan phan hoi: UDP ACK: EXIT
-[Server] Nhan tin hieu dung tu client, ket thuc server
-[Client] Gui nhan xong tat ca goi tin UDP
-"""
-render_terminal_window("Windows PowerShell - UDP DatagramSocket Communication", "java -cp bin com.gpcoder.net.udp.UDPServer & UDPClient", udp_run_text, "screenshots/05_UDP_Socket_Run.png")
-
-# 6. HttpURLConnection Run
-http_run_text = """
-Gui HTTP GET Request toi: https://jsonplaceholder.typicode.com/posts/1
-Response Code: 200 OK
-Content-Type : application/json; charset=utf-8
-
-=== NOI DUNG PHAN HOI (JSON) ===
-{
-  "userId": 1,
-  "id": 1,
-  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-  "body": "quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto"
-}
-================================
-"""
-render_terminal_window("Windows PowerShell - HttpURLConnection GET Request", "java -cp bin com.gpcoder.net.http.HttpURLConnectionExample", http_run_text, "screenshots/06_HttpURLConnection_Run.png")
-
-print("All updated screenshots generated successfully!")
+print("All screenshots updated!")
