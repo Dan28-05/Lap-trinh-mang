@@ -6,42 +6,34 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/**
- * Chương trình TCP Server minh họa cơ chế giao tiếp Socket hướng kết nối (TCP).
- * Tham khảo: viettuts.vn & gpcoder.com
- */
 public class TCPServer {
 
     public static final int PORT = 8088;
 
     public static void main(String[] args) {
-        System.out.println(">>> TCP SERVER ĐANG KHỞI ĐỘNG TRÊN CỔNG " + PORT + " <<<");
+        System.out.println("TCP Server dang khoi dong tren cong " + PORT);
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            System.out.println("Server đã sẵn sàng. Đang chờ kết nối từ Client...");
+            System.out.println("Server san sang, dang cho client ket noi...");
 
-            // Lắng nghe và chấp nhận kết nối từ Client
             try (Socket clientSocket = serverSocket.accept();
                  BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                  PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
 
-                System.out.println("Kết nối thành công từ Client: " + clientSocket.getRemoteSocketAddress());
-                out.println("Chào mừng bạn đã kết nối tới TCP Server!");
+                System.out.println("Client da ket noi: " + clientSocket.getRemoteSocketAddress());
+                out.println("Chao mung ban den voi TCP Server");
 
-                String clientMessage;
-                while ((clientMessage = in.readLine()) != null) {
-                    System.out.println("[Server nhận từ Client]: " + clientMessage);
-                    if ("bye".equalsIgnoreCase(clientMessage.trim()) || "exit".equalsIgnoreCase(clientMessage.trim())) {
-                        out.println("Server: Tạm biệt Client!");
+                String msg;
+                while ((msg = in.readLine()) != null) {
+                    System.out.println("Server nhan: " + msg);
+                    if ("bye".equalsIgnoreCase(msg.trim()) || "exit".equalsIgnoreCase(msg.trim())) {
+                        out.println("Tam biet client");
                         break;
                     }
-                    // Phản hồi lại Client bằng chuỗi chữ hoa
-                    String response = "Server Echo: " + clientMessage.toUpperCase();
-                    out.println(response);
+                    out.println("Server echo: " + msg.toUpperCase());
                 }
-                System.out.println("Client đã ngắt kết nối. Đóng phiên giao dịch.");
+                System.out.println("Client da ngat ket noi");
             }
         } catch (Exception e) {
-            System.err.println("Lỗi Server: " + e.getMessage());
             e.printStackTrace();
         }
     }
