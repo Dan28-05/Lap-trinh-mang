@@ -45,7 +45,6 @@ Lap trinh mang/
 │   ├── 03_InetAddressExample_Code.png
 │   └── 03_InetAddressExample_Run.png
 │── bin/                                         # File class sau khi bien dich
-│── generate_screenshots.py
 │── .gitignore
 └── README.md
 ```
