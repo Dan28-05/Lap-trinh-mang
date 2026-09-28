@@ -16,7 +16,7 @@
    - [Mô hình Client-Server ở chế độ không nối kết (UDP)](#13-mô-hình-client-server-ở-chế-độ-không-nối-kết-udp)
    - [Mô hình truyền thông theo nhóm (Multicast Socket)](#14-mô-hình-truyền-thông-theo-nhóm-multicast-socket)
    - [Kiến trúc Server: Tuần tự (Single-thread) vs Song song (Multi-thread)](#15-kiến-trúc-server-tuần-tự-single-thread-vs-song-song-multi-thread)
-2. [Cấu trúc mã nguồn dự án](#2-cấu-trúc-mã-nguồn-dự-án)
+2. [Cấu trúc thư mục kho mã nguồn](#2-cấu-trúc-thư-mục-kho-mã-nguồn)
 3. [Phân tích chi tiết các bài thực hành](#3-phân-tích-chi-tiết-các-bài-thực-hành)
    - [Chủ đề 1: Giao tiếp TCP Socket (Echo Chat)](#chủ-đề-1-giao-tiếp-tcp-socket-echo-chat)
    - [Chủ đề 2: Giao tiếp TCP Server Đa luồng (Multi-Thread Server)](#chủ-đề-2-giao-tiếp-tcp-server-đa-luồng-multi-thread-server)
@@ -61,50 +61,26 @@ UDP (User Datagram Protocol) là giao thức phi kết nối (connectionless), k
 
 ---
 
-## 2. Cấu trúc mã nguồn dự án
+## 2. Cấu trúc thư mục kho mã nguồn
 
 ```text
-Lap trinh mang/
-│── src/
-│   └── com/
-│       └── gpcoder/
-│           ├── tcp/                               # Lập trình TCP Socket
-│           │   ├── EchoChatSingleServer.java      # Server tuần tự (đơn luồng)
-│           │   ├── EchoChatMultiServer.java       # Server song song (đa luồng với ExecutorService)
-│           │   ├── WorkerThread.java              # Thread xử lý I/O độc lập cho từng Client
-│           │   └── EchoChatClient.java            # Client TCP gửi tuần tự các ký tự '0' -> '9'
-│           ├── udp/                               # Lập trình UDP Datagram Socket
-│           │   ├── EchoServer.java                # Server UDP nhận Datagram và phản hồi
-│           │   └── EchoClient.java                # Client UDP nhập tin từ bàn phím gửi tới Server
-│           ├── multicast/                         # Lập trình Multicast Socket
-│           │   ├── MulticastSender.java           # Máy phát tin nhắn định kỳ tới nhóm 224.0.0.1
-│           │   └── MulticastReceiver.java         # Máy nhận tham gia nhóm (joinGroup) và lắng nghe
-│           └── net/                               # Các lớp cơ bản gói java.net
-│               ├── UrlExample.java                # Phân tích cấu trúc URL
-│               ├── URLConnectionExample.java      # Đọc dữ liệu HTML qua kết nối URLConnection
-│               └── InetAddressExample.java        # Tra cứu IP máy và phân giải DNS
-│── screenshots/                                   # Thư mục ảnh chụp màn hình mã nguồn và kết quả chạy
-│   ├── 01_UrlExample_Code.png
-│   ├── 01_UrlExample_Run.png
-│   ├── 02_URLConnectionExample_Code.png
-│   ├── 02_URLConnectionExample_Run.png
-│   ├── 03_InetAddressExample_Code.png
-│   ├── 03_InetAddressExample_Run.png
-│   ├── 04_TCP_EchoChatSingleServer_Code.png
-│   ├── 04_TCP_EchoChatClient_Code.png
-│   ├── 04_TCP_SingleServer_Run.png
-│   ├── 05_TCP_EchoChatMultiServer_Code.png
-│   ├── 05_TCP_WorkerThread_Code.png
-│   ├── 05_TCP_MultiServer_Run.png
-│   ├── 06_UDP_EchoServer_Code.png
-│   ├── 06_UDP_EchoClient_Code.png
-│   ├── 06_UDP_Echo_Run.png
-│   ├── 07_Multicast_Sender_Code.png
-│   ├── 07_Multicast_Receiver_Code.png
-│   └── 07_Multicast_Run.png
-│── bin/                                           # Thư mục chứa Bytecode (.class) sau khi biên dịch
-│── .gitignore                                     # Quy định các file không đưa lên Git
-└── README.md                                      # Báo cáo chi tiết đồ án
+Lap-trinh-mang/
+│── Laptrinhsocket/                                # Không gian làm việc Lập trình Socket
+│   ├── src/com/gpcoder/
+│   │   ├── tcp/                                   # EchoChatSingleServer, EchoChatMultiServer, WorkerThread, EchoChatClient
+│   │   ├── udp/                                   # EchoServer, EchoClient
+│   │   ├── multicast/                             # MulticastSender, MulticastReceiver
+│   │   └── net/                                   # UrlExample, URLConnectionExample, InetAddressExample
+│   ├── screenshots/                               # Toàn bộ 18 ảnh minh chứng Code IDE và Màn hình chạy
+│   ├── bin/                                       # Bytecode sau khi biên dịch
+│   └── README.md
+│── Lap trinh mang/                                # Thư mục Lập trình mạng
+│   ├── src/com/gpcoder/
+│   ├── screenshots/
+│   ├── bin/
+│   └── README.md
+│── .gitignore
+└── README.md                                      # Báo cáo tổng hợp dự án
 ```
 
 ---
@@ -124,10 +100,10 @@ Lap trinh mang/
 #### Minh chứng Mã nguồn & Kết quả chạy:
 | Mã nguồn EchoChatSingleServer | Mã nguồn EchoChatClient |
 | :---: | :---: |
-| ![EchoChatSingleServer Code](screenshots/04_TCP_EchoChatSingleServer_Code.png) | ![EchoChatClient Code](screenshots/04_TCP_EchoChatClient_Code.png) |
+| ![EchoChatSingleServer Code](Laptrinhsocket/screenshots/04_TCP_EchoChatSingleServer_Code.png) | ![EchoChatClient Code](Laptrinhsocket/screenshots/04_TCP_EchoChatClient_Code.png) |
 
 **Kết quả chạy TCP Single Server & Client:**
-![TCP Single Server Run](screenshots/04_TCP_SingleServer_Run.png)
+![TCP Single Server Run](Laptrinhsocket/screenshots/04_TCP_SingleServer_Run.png)
 
 ---
 
@@ -143,10 +119,10 @@ Lap trinh mang/
 #### Minh chứng Mã nguồn & Kết quả chạy:
 | Mã nguồn EchoChatMultiServer | Mã nguồn WorkerThread |
 | :---: | :---: |
-| ![EchoChatMultiServer Code](screenshots/05_TCP_EchoChatMultiServer_Code.png) | ![WorkerThread Code](screenshots/05_TCP_WorkerThread_Code.png) |
+| ![EchoChatMultiServer Code](Laptrinhsocket/screenshots/05_TCP_EchoChatMultiServer_Code.png) | ![WorkerThread Code](Laptrinhsocket/screenshots/05_TCP_WorkerThread_Code.png) |
 
 **Kết quả chạy TCP Multi-Thread Server phục vụ đồng thời nhiều Client:**
-![TCP MultiServer Run](screenshots/05_TCP_MultiServer_Run.png)
+![TCP MultiServer Run](Laptrinhsocket/screenshots/05_TCP_MultiServer_Run.png)
 
 ---
 
@@ -165,10 +141,10 @@ Lap trinh mang/
 #### Minh chứng Mã nguồn & Kết quả chạy:
 | Mã nguồn EchoServer | Mã nguồn EchoClient |
 | :---: | :---: |
-| ![EchoServer Code](screenshots/06_UDP_EchoServer_Code.png) | ![EchoClient Code](screenshots/06_UDP_EchoClient_Code.png) |
+| ![EchoServer Code](Laptrinhsocket/screenshots/06_UDP_EchoServer_Code.png) | ![EchoClient Code](Laptrinhsocket/screenshots/06_UDP_EchoClient_Code.png) |
 
 **Kết quả chạy UDP Echo Server & Client:**
-![UDP Echo Run](screenshots/06_UDP_Echo_Run.png)
+![UDP Echo Run](Laptrinhsocket/screenshots/06_UDP_Echo_Run.png)
 
 ---
 
@@ -185,10 +161,10 @@ Lap trinh mang/
 #### Minh chứng Mã nguồn & Kết quả chạy:
 | Mã nguồn MulticastSender | Mã nguồn MulticastReceiver |
 | :---: | :---: |
-| ![MulticastSender Code](screenshots/07_Multicast_Sender_Code.png) | ![MulticastReceiver Code](screenshots/07_Multicast_Receiver_Code.png) |
+| ![MulticastSender Code](Laptrinhsocket/screenshots/07_Multicast_Sender_Code.png) | ![MulticastReceiver Code](Laptrinhsocket/screenshots/07_Multicast_Receiver_Code.png) |
 
 **Kết quả chạy Multicast Sender & Receiver:**
-![Multicast Run](screenshots/07_Multicast_Run.png)
+![Multicast Run](Laptrinhsocket/screenshots/07_Multicast_Run.png)
 
 ---
 
@@ -200,16 +176,16 @@ Lap trinh mang/
 #### Minh chứng Mã nguồn & Kết quả chạy:
 | Ví dụ | Ảnh Code IDE | Ảnh Kết quả chạy |
 | :--- | :---: | :---: |
-| **UrlExample** | ![UrlExample Code](screenshots/01_UrlExample_Code.png) | ![UrlExample Run](screenshots/01_UrlExample_Run.png) |
-| **URLConnectionExample** | ![URLConnectionExample Code](screenshots/02_URLConnectionExample_Code.png) | ![URLConnectionExample Run](screenshots/02_URLConnectionExample_Run.png) |
-| **InetAddressExample** | ![InetAddressExample Code](screenshots/03_InetAddressExample_Code.png) | ![InetAddressExample Run](screenshots/03_InetAddressExample_Run.png) |
+| **UrlExample** | ![UrlExample Code](Laptrinhsocket/screenshots/01_UrlExample_Code.png) | ![UrlExample Run](Laptrinhsocket/screenshots/01_UrlExample_Run.png) |
+| **URLConnectionExample** | ![URLConnectionExample Code](Laptrinhsocket/screenshots/02_URLConnectionExample_Code.png) | ![URLConnectionExample Run](Laptrinhsocket/screenshots/02_URLConnectionExample_Run.png) |
+| **InetAddressExample** | ![InetAddressExample Code](Laptrinhsocket/screenshots/03_InetAddressExample_Code.png) | ![InetAddressExample Run](Laptrinhsocket/screenshots/03_InetAddressExample_Run.png) |
 
 ---
 
 ## 4. Hướng dẫn biên dịch và chạy chương trình
 
 ### Biên dịch toàn bộ mã nguồn:
-Mở Terminal hoặc PowerShell tại thư mục dự án:
+Mở Terminal hoặc PowerShell tại thư mục `Laptrinhsocket` (hoặc `Lap trinh mang`):
 ```powershell
 javac -d bin -sourcepath src src/com/gpcoder/net/*.java src/com/gpcoder/tcp/*.java src/com/gpcoder/udp/*.java src/com/gpcoder/multicast/*.java
 ```
@@ -267,7 +243,7 @@ java -cp bin com.gpcoder.net.InetAddressExample
 
 ## 5. Thư mục Screenshots minh chứng
 
-Toàn bộ ảnh chụp màn hình được tổ chức trong thư mục `screenshots/`:
+Toàn bộ ảnh chụp màn hình được lưu trong thư mục `screenshots/`:
 
 | STT | Tên file hình ảnh | Mô tả nội dung |
 | :---: | :--- | :--- |

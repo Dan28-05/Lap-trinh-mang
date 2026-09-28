@@ -64,7 +64,7 @@ UDP (User Datagram Protocol) là giao thức phi kết nối (connectionless), k
 ## 2. Cấu trúc mã nguồn dự án
 
 ```text
-Lap trinh mang/
+Laptrinhsocket/
 │── src/
 │   └── com/
 │       └── gpcoder/
