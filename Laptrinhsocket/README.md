@@ -5,7 +5,7 @@
 > **Tài liệu tham khảo chính**:  
 > 1. [GP Coder - Lập trình mạng với Java](https://gpcoder.com/3664-lap-trinh-mang-voi-java/)  
 > 2. [GP Coder - Xây dựng ứng dụng Client-Server với Socket trong Java](https://gpcoder.com/3679-xay-dung-ung-dung-client-server-voi-socket-trong-java/)  
-> **GitHub Repository**: [https://github.com/Dan28-05/Lap-trinh-mang.git](https://github.com/Dan28-05/Lap-trinh-mang.git)
+> **GitHub Repository**: [https://github.com/Dan28-05/L-p-tr-nh-socket.git](https://github.com/Dan28-05/L-p-tr-nh-socket.git)
 
 ---
 
